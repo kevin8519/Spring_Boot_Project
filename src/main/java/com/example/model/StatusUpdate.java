@@ -11,6 +11,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 @Entity
 @Table(name="status_update")
 public class StatusUpdate {
@@ -19,6 +21,8 @@ public class StatusUpdate {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
+	@NotNull
+	@Size(min=5,max=255,message="{addStatus.text.size}")
 	@Column(name="text")
 	private String text;
 	

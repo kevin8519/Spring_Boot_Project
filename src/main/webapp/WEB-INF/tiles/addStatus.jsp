@@ -10,7 +10,7 @@
 <div class="row">
 
 
-<c:out value="${statusUpdate}"/>
+
 	<div class="col-md-8 col-md-offset-2">
 		
 	
@@ -22,9 +22,13 @@
 			
 			<div class="panel-body">
 				
-				<form:form commandName="statusUpdate">
-					<div class="form-group">
-						<form:textarea path="text" name="text" rows="10" cols="50"></form:textarea>
+				<form:form modelAttribute="statusUpdate">
+				
+				<div class="errors">
+				<form:errors path="text"/>
+				</div>
+				<div class="form-group">
+					<form:textarea path="text" name="text" rows="10" cols="50"></form:textarea>
 					</div>
 					
 					<input type="submit" name="submit" value="Add Status" />				

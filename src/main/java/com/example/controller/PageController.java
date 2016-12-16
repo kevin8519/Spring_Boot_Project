@@ -2,8 +2,12 @@ package com.example.controller;
 
 import java.util.Date;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,24 +30,32 @@ public class PageController {
 	}
 	
 	@RequestMapping(value="/addstatus",method=RequestMethod.GET)
-	ModelAndView addStatus(ModelAndView modelAndView) {
-	StatusUpdate status= new StatusUpdate();
+	ModelAndView addStatus(ModelAndView modelAndView, @ModelAttribute("statusUpdate")StatusUpdate statusUpdate) {
+	/*StatusUpdate status= new StatusUpdate();*/
 	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
 	modelAndView.setViewName("app.addStatus");
-	modelAndView.getModel().put("statusUpdate", status);
+	/*modelAndView.getModel().put("statusUpdate", status);*/
 	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);	
 		return modelAndView;
 	}
 	
 	@RequestMapping(value="/addstatus",method=RequestMethod.POST)
-	ModelAndView addStatus(ModelAndView modelAndView, StatusUpdate statusUpdate) {
+	ModelAndView addStatus(ModelAndView modelAndView, @Valid StatusUpdate statusUpdate,BindingResult result) {
 	
 	
 	modelAndView.setViewName("app.addStatus");
 	
+	if (!result.hasErrors()){
+	
 	statusUpdateService.save(statusUpdate); 
+	modelAndView.getModel().put("statusUpdate", new StatusUpdate());
+	
+	}
 	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
-	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);	
+	
+	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);
+	
+	
 		return modelAndView;
 	}
 }
