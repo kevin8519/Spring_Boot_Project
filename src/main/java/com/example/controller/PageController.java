@@ -5,11 +5,13 @@ import java.util.Date;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.model.StatusUpdate;
@@ -29,11 +31,22 @@ public class PageController {
 		return "app.about";
 	}
 	
+	
+	@RequestMapping(value="/viewstatus",method=RequestMethod.GET)
+	ModelAndView viewStatus(ModelAndView modelAndView,@RequestParam(name="p",defaultValue="1") int pageNumber){
+		Page<StatusUpdate> page=statusUpdateService.getPage(pageNumber);
+		modelAndView.getModel().put("page", page);
+		modelAndView.setViewName("app.viewStatus");
+		return modelAndView;
+	}
+	
 	@RequestMapping(value="/addstatus",method=RequestMethod.GET)
 	ModelAndView addStatus(ModelAndView modelAndView, @ModelAttribute("statusUpdate")StatusUpdate statusUpdate) {
 	/*StatusUpdate status= new StatusUpdate();*/
-	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
+		
 	modelAndView.setViewName("app.addStatus");
+	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
+	
 	/*modelAndView.getModel().put("statusUpdate", status);*/
 	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);	
 		return modelAndView;
