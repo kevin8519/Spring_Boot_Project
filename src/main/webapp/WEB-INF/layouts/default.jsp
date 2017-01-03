@@ -43,7 +43,19 @@
 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="${contextRoot}/addstatus/">addStatus</a></li>
+				
+				 <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Status <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="${contextRoot}/addstatus/">addStatus</a></li>
+               <li><a href="${contextRoot}/viewstatus/">ViewStatus</a></li>
+                
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
 			</ul>
 		</div>
 		<!--/.nav-collapse -->

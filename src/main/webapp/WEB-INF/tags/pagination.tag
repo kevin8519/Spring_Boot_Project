@@ -9,13 +9,12 @@
 
 <c:set var="size" value="${empty size ? 10:size}"/>
 <br>
-<p> Block:${ block} </p>
-<p> size:${ size} </p>
+
 
 <c:set var="startPage" value="${block*size+1}"/>
 <c:set var="endPage" value="${(block+1)*size}"/>
 <c:set var="endPage" value="${endPage > page.totalPages ? page.totalPages:endPage}"/>
-
+<c:if test="${page.totalPages !=1}">
 <div class="pagination"> 
 <c:if test="${block !=0}">
 <a href="${url}?b=${block-1}&p=${(block-1)*size+1}">&lt;&lt;</a>
@@ -52,4 +51,5 @@
 	<a href="${url}?b=${block+1}&p=${(block+1)*size+1}">&gt;&gt;</a>
 	</c:if>
 	</div>
-           
+	</c:if>
+     

@@ -11,7 +11,7 @@ import com.example.model.StatusUpdateDao;
 
 @Service
 public class StatusUpdateService {
-	public final static int PAGESIZE=3;
+	public final static int PAGESIZE=10;
 	@Autowired
 	private StatusUpdateDao statusUpdateDao;
 	
@@ -33,5 +33,19 @@ public class StatusUpdateService {
 		
 		return statusUpdateDao.findAll(pr);
 		
+	}
+
+
+
+	public void delete(Long id) {
+		statusUpdateDao.delete(id);
+		
+	}
+
+
+
+	public StatusUpdate get(Long id) {
+		
+		return statusUpdateDao.findOne(id);
 	}
 }

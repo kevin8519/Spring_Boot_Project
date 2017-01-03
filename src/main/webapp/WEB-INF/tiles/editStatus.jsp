@@ -17,21 +17,23 @@
 		<div class="panel panel-default">
 		
 			<div class="panel-heading">
-				<div class="panel-title">Add a Status Update</div>
+				<div class="panel-title">Edit Status</div>
 			</div>
 			
 			
 				
 				<form:form modelAttribute="statusUpdate">
-				
+				<form:input path="id" type="hidden"/>
+				<form:input path="added" type="hidden"/>
 				<div class="errors">
 				<form:errors path="text"/>
 				</div>
 				<div class="form-group">
 					<form:textarea path="text" name="text" rows="10" cols="50"></form:textarea>
+					
 					</div>
 					
-					<input type="submit" name="submit" value="Add Status" />				
+					<input type="submit" name="submit" value="save" />				
 				</form:form>
 			
 			</div>
@@ -39,22 +41,7 @@
 		
 		
 	
-	<div class="panel panel-default">
-		
-			<div class="panel-heading">
-				<div class="panel-title">Add Status on:<fmt:formatDate pattern="EEEE:d:MMMM y 'at'H:MM:s" value="${getLatesStatusUpdate.added}"></fmt:formatDate></div>
-			</div>
-			
-			<div class="panel-body">
-				${getLatesStatusUpdate.text}
-			
-			</div>
-		
-		
-		</div>
 	
-	</div>
-
 
 
 </div>

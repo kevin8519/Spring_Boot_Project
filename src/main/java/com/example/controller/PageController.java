@@ -1,17 +1,8 @@
 package com.example.controller;
 
-import java.util.Date;
-
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.model.StatusUpdate;
@@ -19,11 +10,22 @@ import com.example.service.StatusUpdateService;
 
 @Controller
 public class PageController {
+	
 	@Autowired
 	private StatusUpdateService statusUpdateService; 
+	
 	@RequestMapping("/")
-	String home() {
-		return "app.homepage";
+	
+	ModelAndView home(ModelAndView modelAndview) {
+		
+		StatusUpdate statusUpdate=statusUpdateService.getLatest();
+		modelAndview.getModel().put("statusUpdate", statusUpdate);
+		
+		modelAndview.setViewName("app.homepage");
+		
+		
+		
+		return modelAndview;
 	}
 	
 	@RequestMapping("/about")
@@ -32,43 +34,5 @@ public class PageController {
 	}
 	
 	
-	@RequestMapping(value="/viewstatus",method=RequestMethod.GET)
-	ModelAndView viewStatus(ModelAndView modelAndView,@RequestParam(name="p",defaultValue="1") int pageNumber){
-		Page<StatusUpdate> page=statusUpdateService.getPage(pageNumber);
-		modelAndView.getModel().put("page", page);
-		modelAndView.setViewName("app.viewStatus");
-		return modelAndView;
-	}
 	
-	@RequestMapping(value="/addstatus",method=RequestMethod.GET)
-	ModelAndView addStatus(ModelAndView modelAndView, @ModelAttribute("statusUpdate")StatusUpdate statusUpdate) {
-	/*StatusUpdate status= new StatusUpdate();*/
-		
-	modelAndView.setViewName("app.addStatus");
-	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
-	
-	/*modelAndView.getModel().put("statusUpdate", status);*/
-	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);	
-		return modelAndView;
-	}
-	
-	@RequestMapping(value="/addstatus",method=RequestMethod.POST)
-	ModelAndView addStatus(ModelAndView modelAndView, @Valid StatusUpdate statusUpdate,BindingResult result) {
-	
-	
-	modelAndView.setViewName("app.addStatus");
-	
-	if (!result.hasErrors()){
-	
-	statusUpdateService.save(statusUpdate); 
-	modelAndView.getModel().put("statusUpdate", new StatusUpdate());
-	
-	}
-	StatusUpdate getLatesStatusUpdate=statusUpdateService.getLatest();
-	
-	modelAndView.getModel().put("getLatesStatusUpdate", getLatesStatusUpdate);
-	
-	
-		return modelAndView;
-	}
 }

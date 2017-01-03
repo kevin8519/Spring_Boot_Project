@@ -18,11 +18,12 @@
 
 	<div class="col-md-8 col-md-offset-2">
 	
-	<kjt:pagination url="${url}" page="${page}" size="4"></kjt:pagination>
+	<kjt:pagination url="${url}" page="${page}" size="10"></kjt:pagination>
 	
 	
 	<c:forEach var="page" items="${page.content}">
-	
+	<c:url var="editLink" value="/editstatus?id=${page.id}"></c:url>
+	<c:url var="deleteLink" value="/deletestatus?id=${page.id}"></c:url>
 	<div class="panel panel-default">
 		
 			<div class="panel-heading">
@@ -30,7 +31,14 @@
 			</div>
 			
 			<div class="panel-body">
-				<c:out value="${page.text}"></c:out>
+				
+				<div>${page.text}</div>
+				
+				<div class="edit-links pull-right">
+				
+				<a href="${editLink}">Edit</a> | <a onclick="return confirm('Are you sure want to delete');" href="${deleteLink}">Delete</a> 
+				
+				</div>
 		
 	
     
